@@ -1,7 +1,12 @@
-import numpy as np
+from random import random
 
 from lib.globals import ROWS, COLS
 
+def bitwise_or_reduce(arr):
+    result = arr[0]
+    for item in arr[1:]:
+        result |= item
+    return result
 
 def rand_letters(n=1):
     raw_freq = {
@@ -34,10 +39,22 @@ def rand_letters(n=1):
     }
     raw_freq = {k.upper(): v for k, v in raw_freq.items()}
 
-    p = np.array([v for k, v in raw_freq.items()])
-    p /= np.sum(p)
+    ks = [k for k, v in raw_freq.items()]
+    p = [v for k, v in raw_freq.items()]
+    sp = sum(p)
+    p = [v / sp for v in p]
+    cp = [p[0]]
+    for v in p[1:]:
+        cp.append(cp[-1] + v)
+    
+    def rand_letter():
+        r = random()
+        for c, v in zip(ks, cp):
+            if r < v:
+                return c
+    
+    return [rand_letter() for _ in range(n)]
 
-    return np.random.choice(list(raw_freq.keys()), size=n, p=p)
 
 
 def options(i: int, j: int):

@@ -1,4 +1,3 @@
-import lib.common_curses
 from lib.grid import Grid
 from lib.scoring import best_score
 from lib.visitor import Visitor
@@ -40,4 +39,4 @@ def solve(g: Grid):
         if cmax[0] > g.ubs[r]:
             break
 
-    return covers.sorted(key=lambda _: -_[1])
+    return sorted(covers, key=lambda _: -_[1])

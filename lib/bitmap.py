@@ -1,4 +1,4 @@
-import numpy as np
+from lib.utils import bitwise_or_reduce
 
 
 class BitMap:
@@ -14,7 +14,7 @@ class BitMap:
         self.c2b = {v: k for k, v in b2c.items()}
 
     def pack(self, items):
-        return np.bitwise_or.reduce([self.c2b[_] for _ in items])
+        return bitwise_or_reduce([self.c2b[i] for i in items])
 
     def unpack(self, val):
         return [v for k, v in self.b2c.items() if val & k]
